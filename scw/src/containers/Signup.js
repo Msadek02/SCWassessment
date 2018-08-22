@@ -43,6 +43,8 @@ export default class Signup extends Component {
     let formData = Object.assign({}, this.state)
     delete formData.isLoading
     debugger
+
+    axios.post("url", formData).then(res,)
     event.preventDefault();
 
     this.setState({ isLoading: true });
