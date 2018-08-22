@@ -5,7 +5,6 @@ import {
   FormControl,
   ControlLabel
 } from "react-bootstrap";
-import LoaderButton from "../components/LoaderButton";
 import "./Signup.css";
 
 export default class Signup extends Component {
@@ -20,7 +19,8 @@ export default class Signup extends Component {
       gender: "",
       phoneNumber: "",
       userName: "",
-      password: ""
+      password: "",
+      confirmPassword: ""
     };
   }
 
@@ -32,9 +32,6 @@ export default class Signup extends Component {
     );
   }
 
-  validateConfirmationForm() {
-    return this.state.confirmationCode.length > 0;
-  }
 
   handleChange = event => {
     this.setState({
@@ -43,11 +40,14 @@ export default class Signup extends Component {
   }
 
   handleSubmit = async event => {
+    let formData = Object.assign({}, this.state)
+    delete formData.isLoading
+    debugger
     event.preventDefault();
 
     this.setState({ isLoading: true });
 
-    this.setState({ newUser: "test" });
+    this.setState({ userName: "test" });
 
     this.setState({ isLoading: false });
   }
@@ -71,15 +71,7 @@ export default class Signup extends Component {
           />
           <HelpBlock>Please check your email for the code.</HelpBlock>
         </FormGroup>
-        <LoaderButton
-          block
-          bsSize="large"
-          disabled={!this.validateConfirmationForm()}
-          type="submit"
-          isLoading={this.state.isLoading}
-          text="Verify"
-          loadingText="Verifying…"
-        />
+        
       </form>
     );
   }
@@ -87,6 +79,47 @@ export default class Signup extends Component {
   renderForm() {
     return (
       <form onSubmit={this.handleSubmit}>
+
+        <FormGroup controlId="givenName" bsSize="large">
+          <ControlLabel>Given Name</ControlLabel>
+          <FormControl
+            autoFocus
+            type="text"
+            value={this.state.givenName}
+            onChange={this.handleChange}
+          />
+        </FormGroup>
+
+        <FormGroup controlId="familyName" bsSize="large">
+          <ControlLabel>Family Name</ControlLabel>
+          <FormControl
+            autoFocus
+            type="text"
+            value={this.state.familyName}
+            onChange={this.handleChange}
+          />
+        </FormGroup>
+
+        <FormGroup controlId="phoneNumber" bsSize="large">
+          <ControlLabel>Phone Number</ControlLabel>
+          <FormControl
+            autoFocus
+            type="text"
+            value={this.state.phoneNumber}
+            onChange={this.handleChange}
+          />
+        </FormGroup>
+
+        <FormGroup controlId="userName" bsSize="large">
+          <ControlLabel> User Name</ControlLabel>
+          <FormControl
+            autoFocus
+            type="text"
+            value={this.state.userName}
+            onChange={this.handleChange}
+          />
+        </FormGroup>
+
         <FormGroup controlId="email" bsSize="large">
           <ControlLabel>Email</ControlLabel>
           <FormControl
@@ -96,7 +129,8 @@ export default class Signup extends Component {
             onChange={this.handleChange}
           />
         </FormGroup>
-        <FormGroup controlId="password" bsSize="large">
+
+          <FormGroup controlId="password" bsSize="large">
           <ControlLabel>Password</ControlLabel>
           <FormControl
             value={this.state.password}
@@ -104,6 +138,7 @@ export default class Signup extends Component {
             type="password"
           />
         </FormGroup>
+
         <FormGroup controlId="confirmPassword" bsSize="large">
           <ControlLabel>Confirm Password</ControlLabel>
           <FormControl
@@ -112,26 +147,13 @@ export default class Signup extends Component {
             type="password"
           />
         </FormGroup>
-        <LoaderButton
-          block
-          bsSize="large"
-          disabled={!this.validateForm()}
-          type="submit"
-          isLoading={this.state.isLoading}
-          text="Signup"
-          loadingText="Signing up…"
-        />
+
+       <button className="btn btn-primary form-btn mx-auto submit-btn button-actions" disabled={this.state.isLoading}>Submit</button>
       </form>
     );
   }
 
   render() {
-    return (
-      <div className="Signup">
-        {this.state.newUser === null
-          ? this.renderForm()
-          : this.renderConfirmationForm()}
-      </div>
-    );
+    return this.renderForm();
   }
 }

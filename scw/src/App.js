@@ -2,9 +2,10 @@ import React, { Component, Fragment } from "react";
 import logo from './logo.svg';
 import './App.css';
 import {  Route, Link } from 'react-router-dom';
-import {
-  NavItem
-} from "react-bootstrap";
+import { NavItem } from "react-bootstrap";
+import Signup from "./containers/Signup";
+
+
 
 
 
@@ -37,26 +38,27 @@ class App extends Component {
     return (
       
       <div className="App">
+        
         <header className="App-header">
         
     {this.state.isAuthenticated
         ? <NavItem onClick={this.handleLogout}>Logout</NavItem>
         : <Fragment>
-            <Link to="/signup">
-              <NavItem>Signup</NavItem>
-            </Link>
-            <Link to="/login">
-              <NavItem>Login</NavItem>
-            </Link>
+              <NavItem componentClass='span'>
+                <Link to="/signup">Signup</Link>
+              </NavItem>
+              <NavItem componentClass='span'>
+                <Link to="/login">Login</Link>
+              </NavItem>
           </Fragment>
     }
+
+        
      <Route childProps={childProps} />
           <img src={logo} className="App-logo" alt="logo" />
           <h1 className="App-title">Welcome to React</h1>
         </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
+        <Signup />
       </div>
     );
   }
